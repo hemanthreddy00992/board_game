@@ -1,17 +1,53 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Footer</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  
+  <title>Hello, world!</title>
 </head>
 
 <body>
-    <div th:fragment="page-footer" class="page-footer">
-        <div class="d-flex flex-wrap justify-content-center py-3 mb-4 lead">
-            Copyright &copy; M. B. 2023
+
+    <footer class="footer-section" th:fragment="footer">
+        <div class="container">
+          <div class="footer-left-pic">
+            <img th:src="@{~/images/footer-left-pic.png}" alt="dragon">
+          </div>
+          <div class="footer-right-pic">
+            <img th:src="@{~/images/footer-right-pic.png}" alt="ghouls">
+          </div>
+          <a href="#" class="footer-logo">
+            <img th:src="@{~/images/logo.png}" alt="BGSelect Logo">
+          </a>
+          <ul class="main-menu footer-menu">
+            <li><a href="/">Home</a></li>
+            <li><a href="/search">Search</a></li>
+            <li><a href="/account">My Account</a></li>
+          </ul>
+          <div class="copyright"><a href="">BGSelect</a> 2019 @ All rights reserved</div>
         </div>
-    </div>
+      </footer>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

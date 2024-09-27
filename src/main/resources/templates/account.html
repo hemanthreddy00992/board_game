@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <div th:replace="fragments/boilerplate :: head"></div>
+    <div th:replace="fragments/boilerplate :: css"></div>
+    <!-- <link rel="stylesheet" th:href="@{~/css/account.css}"> -->
+    <title>My Account</title>
+</head>
+
+<body>
+
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Page top section -->
+    <section class="page-top-section set-bg" th:data-setbg="@{~/images/page-top-bg/1.jpg}">
+        <div class="page-info">
+            <h2>My Account</h2>
+            <div class="site-breadcrumb">
+                <a href="/home">Home</a> /
+                <span>Account</span>
+            </div>
+        </div>
+    </section>
+    <!-- Page top end-->
+
+    <!--  Upload Success/Fail Message -->
+    <div th:if="${message}">
+        <h2 th:text="${message}"></h2>
+    </div>
+
+    <div th:if="${incorrectUser == false}">
+
+        <section class="newsletter-section">
+            <div class="container">
+                <div class="row user-profile-row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md">
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                <img class="img-fluid img-thumbnail rounded account-pic" th:src="${user.avatar}"
+                                    alt="Account picture">
+                                <button type="button" class="site-btn change-pic-btn" data-toggle="modal"
+                                    data-target="#profile-modal">Change Profile Pic</button>
+                            </div>
+                            <div class="col-md-8 text-center">
+                                <div class="d-flex  flex-column align-items-center justify-content-between profile-box">
+                                    <div>
+                                        <p class="username-top" th:text="${user.username}">
+                                            </h3>
+                                    </div>
+                                    <div>
+                                        <p class="date-text">Member since: 01/01/2001</p>
+                                    </div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Profile Pic Modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="profile-modal">
+            <div class="modal-dialog" role="document">
+                <form action="/upload" enctype="multipart/form-data" method="POST">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Profile Picture</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <input type="file" name="file">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" value="submit" class="btn btn-success">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <section class="intro-section">
+            <div class="container">
+
+                <h2 class="section-header">Your Games</h2>
+
+                <!-- No User Games Yet -->
+                <div th:if="${games.isEmpty()}">
+                    <div class="row comment-row text-center">
+                        <div class="col-md-3"></div>
+                        <div class="d-flex flex-column align-items-center justify-content-between col-md">
+                            <p class="single-message-text">Hmm... you haven't added any games yet.</p>
+                            <button class="site-btn" id="addGameBtn">Add Game</button>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+
+                <!-- List User Games -->
+                <div th:unless="${games.isEmpty()}" class="center-text">
+                    <table class="table" id="search-results-table">
+                        <div th:replace="fragments/game-results :: game-results"></div>
+                    </table>
+                    <div class="d-flex flex-column align-items-center justify-content-between col-md">
+                        <button class="site-btn" id="addGameBtn">Add Game</button>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </section>
+
+
+    </div>
+
+    <!-- Wrong User Logged In -->
+    <div th:if="${incorrectUser == true}">
+        <div class="row comment-row text-center">
+            <div class="col-md-3"></div>
+            <div class="d-flex flex-column align-items-center justify-content-between col-md">
+                <p class="single-message-text">Hmm... you shouldn't be here.</p>
+                <button class="btn btn-danger" id="myActBtn">Go to My Account</button>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <div th:replace="fragments/boilerplate :: js"></div>
+    <script type="text/javascript" th:src="@{~/js/account.js}"></script>
+</body>
+
+</html>

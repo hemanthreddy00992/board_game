@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+
+<head>
+  <div th:replace="fragments/boilerplate :: head"></div>
+  <div th:replace="fragments/boilerplate :: css"></div>
+  <!-- <link rel="stylesheet" href="css/result.css"> -->
+
+  <title>Search Results</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <div th:fragment="game-results">
+    <th:block th:each="game, count: ${games}">
+      <tr class="result-card" th:if="${count.index < 20}">
+        <!-- <tr class="result-card" th:if="${count.index < 20}" th:data-id="${game.gameId}" -->
+        <!-- onclick="selectGame(this.getAttribute('data-id'))"> -->
+        <td>
+          <div class="row">
+              <div class="col-md-2"></div>
+
+              <div class="container-fluid header-bar-wrap result-entry col-md" th:data-id="${game.gameId}"
+              onclick="selectGame(this.getAttribute('data-id'))">
+                <div class="row">
+                  <div class="col-md-4">
+                  </div>
+                  <div class="col-md-8">
+                    <p class="text-center game-title-text" th:text="${game.name}">
+    
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 thumb-img-wrap">
+                    <img alt="game image" th:src="${game.thumb_url}" class="img-thumbnail">
+                  </div>
+                  <div class="col-md-8">
+                    <p class="game-desc-body" th:utext="${{#strings.length(game.description) > 400} ? #strings.substring(game.description,0,400)+'. . .' : game.description}">
+    
+                      </p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-3">
+                      <p class="rank-text" th:text="'Rank: ' + ${game.gameRank}">
+    
+                      </p>
+                    </div>
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-3">
+                      <p class="votes-text" th:text="'Votes: ' + ${game.num_votes}">
+    
+                      </p>
+                    </div>
+                  </div>
+                 </div>
+                <div class="col-md-2"></div>
+          </div>
+
+          </td>
+        </tr>
+      </th:block>
+    </div>
+
+
+  <div th:replace="fragments/boilerplate :: js"></div>
+  <script type="text/javascript" src="js/game-results.js"></script>
+</body>
+
+</html>

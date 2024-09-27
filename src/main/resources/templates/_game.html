@@ -1,0 +1,177 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <div th:replace="fragments/boilerplate :: head"></div>
+
+  <link rel="stylesheet" th:href="@{~/css/game.css}">
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <title th:text="${game.name}"></title>
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <div class="container">
+    <div class="header">
+      <h1 class="text-center" th:text="${game.name}"></h1>
+    </div>
+
+    <!-- Game Metadata -->
+    <div class=game-data-card>
+      <div class="row" id="gameMetadataRow">
+        <div class="col-md-4">
+          <div class="row thumb-img-wrap">
+            <div class="col-md-12" id="gameImg">
+              <img th:src="${game.img_url}" class="img-thumbnail">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-8">
+              <h2 class="title-text" th:text="${game.name}"></h2>
+            </div>
+            <div class="col-md-4">
+              <h2 class=”rank-text“ th:text="'Rank: ' + ${game.gameRank}"></h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4" id="gameNumOfPlayers">
+              <h5 th:text="'# of Players: ' + ${game.min_player} + ' to ' + ${game.max_player}"></h5>
+            </div>
+            <div class="col-md-4" id="gamePlayTime">
+              <h5 th:text="'Average Playtime: ' + ${game.avg_play_time} +  ' min'"></h5>
+            </div>
+            <div class="col-md-4" id="gameAge">
+              <h5 th:text="'Recommended Age: ' + ${game.age} + '+'"></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12" id="gameDesigner">
+                  <p th:text="'Designer: ' + ${game.designer}"></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12" id="gamePublisher">
+                  <p th:text="'Publisher: ' + ${game.publisher}"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6" id="bggLink">
+              <p>Board Game Geeks Link</p>
+              <p><a th:href=${game.bgg_url} th:text="${game.bgg_url}"></a></p>
+            </div>
+          </div>
+          <div class="row" th:if="${game.authorUsername == username}">
+            <div class="col-md"></div>
+            <div class="col-md-6">
+              <button class="btn btn-danger btn-block" id="editBtn" th:data-id="${game.gameId}"
+                onclick="location.href='/edit/' + this.getAttribute('data-id')">EDIT</button>
+            </div>
+            <div class="col-md"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Game Description -->
+      <div class="row">
+        <div class="col-md-12 description-box">
+          <h2>Description</h2>
+          <p th:text="${game.description}"></p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <!-- Comments -->
+    <div class=game-data-card id="comment-box">
+
+      <div class="row">
+        <div class="col-md-12 description-box">
+          <h2>Comments</h2>
+        </div>
+      </div>
+
+      <th:block th:if="${comments != null}">
+
+        <th:block th:each="comment, count: ${comments}">
+          <div class="media">
+            <img class="align-self-start mr-3 profile-pic" th:src="${comment.avatar}"
+              alt="Profile picture">
+            <div class="media-body">
+              <h5 class="mt-0" th:text="${comment.username}"></h5>
+              <p th:text="${comment.content}"></p>
+            </div>
+          </div>
+        </th:block>
+
+        <div th:if="${username != 'anonymousUser'}">
+          <div class="d-flex justify-content-center align-items-center flex-column">
+            <button class="btn btn-success commentBtn">Comment</button>
+          </div>
+        </div>
+
+      </th:block>
+
+      <div th:if="${comments == null AND username != 'anonymousUser'}">
+        <div class="d-flex flex-column align-items-center justify-content-between">
+          <p>Hmm... looks like there's no comments here.</p>
+          <button class="btn btn-success commentBtn">Be the first!</button>
+        </div>
+      </div>
+
+      <div th:if="${comments == null AND username == 'anonymousUser'}">
+          <div class="d-flex justify-content-center align-items-center flex-column">
+            <form action="/login" method="get">
+              <div class="form-group">
+                <h3>Log in to leave a comment.</h3>
+                <div class="form-group">
+                  <div class="d-flex d-flex justify-content-center align-items-center flex-column">
+                    <button class="btn btn-success commentBtn">Log in</button>
+                  </div>
+                </div>
+            </form>
+          </div>
+
+    </div>
+
+
+  </div>
+
+  <div hidden>
+    <div th:if="${username != 'anonymousUser'}" class="new-comment">
+      <div class="media">
+        <img class="align-self-start mr-3 profile-pic" th:src="${avatar}" alt="Profile picture">
+        <div class="media-body">
+          <h5 class="mt-0" th:text="${username}"></h5>
+          <form th:action="|${game.gameId}|" th:method="post">
+            <div class="form-row">
+              <textarea name="content" class="w-100 form-control" type="textarea" rows=3
+                placeholder="Comment . . ."></textarea>
+            </div>
+            <div class="form-row">
+              <div class="d-flex flex-row-reverse">
+                <button class="btn btn-success submitComment">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div th:replace="fragments/boilerplate :: js"></div>
+  <script type="text/javascript" th:src="@{~/js/game.js}"></script>
+</body>
+
+</html>

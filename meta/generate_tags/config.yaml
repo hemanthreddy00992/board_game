@@ -1,0 +1,10 @@
+type: "mechanic"
+
+host: "localhost"
+db_name: "bg_games"
+db_user: "root"
+db_pw: "Thisismy-Battlefield1942"
+
+gc_table: "game_categories"
+gm_table: "game_mechanics"
+

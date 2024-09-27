@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <div th:replace="fragments/boilerplate :: head"></div>
+  <div th:replace="fragments/boilerplate :: css"></div>
+  <title>Add a Game</title>
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <!-- Page top section -->
+  <section class="page-top-section set-bg" th:data-setbg="@{~/images/page-top-bg/1.jpg}">
+    <div class="page-info">
+      <h2>Add Game</h2>
+      <div class="site-breadcrumb">
+        <a href="/home">Home</a> /
+        <span>Add</span>
+      </div>
+    </div>
+  </section>
+  <!-- Page top end-->
+
+  <!-- Game Form -->
+  <section class="newsletter-section">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 game-form">
+          <form action="/game/success" method="post">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="Game Name" required>
+                <div class="invalid-feedback">
+                  Please enter a name.
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="designer">Designer</label>
+                <input type="text" name="designer" id="designer" class="form-control" placeholder="Designer" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="publisher">Publisher</label>
+                <input type="text" name="publisher" id="publisher" class="form-control" placeholder="Publisher"
+                  required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="year">Year</label>
+                <input type="text" name="year" id="year" class="form-control" placeholder="Year Published" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="min-players">Minimum Players</label>
+                <select name="min-players" id="min-players" class="form-control" required>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="max-players">Maximum Players</label>
+                <select name="max-players" id="max-players" class="form-control" required>
+                </select>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="age">Minimum Age</label>
+                <select name="age" id="age" class="form-control" required>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="avg-play-time">Average Play Time</label>
+                <input type="text" name="avg-play-time" id="avg-play-time" class="form-control" placeholder="Minutes"
+                  required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="min-play-time">Minimum Play Time</label>
+                <input type="text" name="min-play-time" id="min-play-time" class="form-control" placeholder="Minutes"
+                  required>
+              </div>
+              <div class="form-group col-md-4">
+                <label for="max-play-time">Maximum Play Time</label>
+                <input type="text" name="max-play-time" id="max-play-time" class="form-control" placeholder="Minutes"
+                  required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="desc">Game Description</label>
+              <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="Tell us about the game!"
+                required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="img-url">Image URL</label>
+              <input type="text" class="form-control" name="img-url" id="img-url"
+                placeholder="https://example.com/my_image.jpg" required>
+            </div>
+
+            <div class="form-group">
+              <label for="thumb-url">Thumbnail URL</label>
+              <input type="text" name="thumb-url" class="form-control" id="thumb-url"
+                placeholder="https://example.com/my_thumbnail.jpg" required>
+            </div>
+
+            <div class="form-group">
+              <label for="bgg-url">BGG URL</label>
+              <input type="text" name="bgg-url" class="form-control" id="bgg-url"
+                placeholder="https://boardgamegeek.com/boardgame/1111/game-name">
+            </div>
+
+            <!-- Category/Mechanic Modal Buttons -->
+            <div class="row search-btn-row">
+              <div class="col-md-4"></div>
+              <div class="col-md-1">
+                <button type="button" class="btn btn-warning" data-toggle="modal"
+                  data-target="#categoryModal">Categories</button>
+              </div>
+              <div class="col-md-2"></div>
+              <div class="col-md-1">
+                <button type="button" class="btn btn-warning" data-toggle="modal"
+                  data-target="#mechanicModal">Mechanics</button>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+
+            <div class="form-row submit-btn-row">
+              <div class="col-md"></div>
+              <div class="col-md-3">
+                <button class="site-btn button" onclick="return false;" id="submitBtn">Submit</button>
+              </div>
+              <div class="col-md"></div>
+            </div>
+
+            <!-- Category Modal -->
+            <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="categoryModalLabel">Select Categories</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" id="categoryModalBody">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mechanic Modal -->
+            <div class="modal fade" id="mechanicModal" tabindex="-1" role="dialog" aria-labelledby="mechanicModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="mechanicModalLabel">Select Mechanics</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" id="mechanicModalBody">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </form>
+
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <div th:replace="fragments/boilerplate :: js"></div>
+  <script type="text/javascript" src="js/mechanicDict.js"></script>
+  <script type="text/javascript" src="js/categoryDict.js"></script>
+  <script type="text/javascript" src="js/add.js"></script>
+</body>
+
+</html>

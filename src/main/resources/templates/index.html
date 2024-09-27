@@ -1,54 +1,92 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" data-bs-theme="light">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <div th:replace="fragments/boilerplate :: head"></div>
 
 
-<head th:replace="fragments/header.html :: html-head(title='Boardgame Home')"></head>
+  <div th:replace="fragments/boilerplate :: css"></div>
+
+  <title>Search for Games</title>
+</head>
 
 <body>
-    <nav th:replace="fragments/links :: nav.navigation-links"></nav>
+  <div th:replace="fragments/navbar :: navbar"></div>
 
-    <main class="container">
-        <div class="p-4 p-md-5 mb-4 text-center">
-            <div class="container col-md-6">
-                <h1>Boardgame Lists</h1>
-
-                <div id="error" class="error pt-3">
-                    <div th:if="${userAddedMsg}">
-                        <p th:text="${userAddedMsg}"></p>
-                    </div>
-                </div>
-
-                <div th:unless="${boardgames.empty}" class="py-3 my-3">
-                    <div class="list-group d-flex flex-wrap justify-content-center" th:each="boardgame : ${boardgames}">
-                        <a href="#" th:href='@{|/${boardgame.id}|}'
-                            class="list-group-item list-group-item-action py-3 my-2">
-                            <h4 th:text="${boardgame.name}">Name</h4>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div th:if="${boardgames.empty}">
-                <p>Currently there is no boardgame database exists.</p>
-            </div>
-
-            <div sec:authorize="!hasRole('ROLE_USER')">
-                <p class="lead">For more services, login <a href="#" th:href="@{/login}">Here</a></p>
-                <p class="lead">To join to the service, <a href="#" th:href="@{/newUser}">Click</a> here</p>
-            </div>
-            <div sec:authorize="hasRole('ROLE_USER') || hasRole('ROLE_MANAGER')">
-                <p class="lead">Click <a href="#" th:href="@{/secured/addBoardGame}">Here</a> to add a boardgame!</p>
-                <form action="#" th:action="@{/logout}" method="post">
-                    <input type="submit" value="Logout" class="btn btn-primary m-2 pb-2">
-                </form>
-            </div>
+  <!-- Hero section -->
+  <section class="hero-section overflow-hidden">
+    <div class="hero-slider owl-carousel">
+      <div class="hero-item set-bg d-flex align-items-center justify-content-center text-center"
+        data-setbg="images/slider-bg-1.jpg">
+        <div class="container">
+          <h2>Game on!</h2>
+          <p>You want to play a table-top game with your friends, but you aren't sure where to start. Use our tool to
+            help you find the perfect game!</p>
+          <a href="/search" class="site-btn">Find Games <img th:src="@{images/icons/double-arrow.png}" alt="#" /></a>
         </div>
-    </main>
-    <div class="b-example-divider border border-light"></div>
+      </div>
+    </div>
+  </section>
+  <!-- Hero section end-->
 
-    <div th:include="fragments/links :: div.bottom-links"></div>
-    <div th:replace="fragments/footer.html :: page-footer"></div>
+
+  <!-- Intro section -->
+  <section class="intro-section">
+    <div class="container">
+      <!-- <div class="row">
+          <div class="section-title text-white text-center">
+              <h2>Latest News</h2>
+            </div>
+      </div> -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="intro-text-box text-box text-white">
+            <a href="" id="blog-title-link-0">
+                <h3 class="blog-title" id="blog-title-0">The best online game is out now!</h3>
+            </a>
+            <div class="top-meta" id="blog-info-0"></div>
+            <p id="blog-body-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida....</p>
+            <a href="" class="read-more" id="blog-link-0">Read More <img src="images/icons/double-arrow.png"
+                alt="#" /></a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="intro-text-box text-box text-white">
+            <a href="" id="blog-title-link-1">
+              <h3 class="blog-title" id="blog-title-1">The best online game is out now!</h3>
+            </a>
+            <div class="top-meta" id="blog-info-1"></div>
+            <p id="blog-body-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida....</p>
+            <a href="" class="read-more" id="blog-link-1">Read More <img src="images/icons/double-arrow.png"
+                alt="#" /></a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="intro-text-box text-box text-white">
+            <a href="" id="blog-title-link-2">
+              <h3 class="blog-title" id="blog-title-2">The best online game is out now!</h3>
+            </a>
+            <div class="top-meta" id="blog-info-2"></div>
+            <p id="blog-body-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+              incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida....</p>
+            <a href="" class="read-more" id="blog-link-2">Read More <img src="images/icons/double-arrow.png"
+                alt="#" /></a>
+          </div>
+        </div>
+      </div>
+  </section>
+  <!-- Intro section end -->
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <script src="https://static.sekandocdn.net/static/feednami/feednami-client-v1.1.js"></script>
+  <div th:replace="fragments/boilerplate :: js"></div>
+  <script src="js/index.js"></script>
+
+
 </body>
 
 </html>

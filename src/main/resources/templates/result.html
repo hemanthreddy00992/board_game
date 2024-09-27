@@ -1,0 +1,83 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" lang="en">
+
+<head>
+  <div th:replace="fragments/boilerplate :: head"></div>
+
+  <!-- <link rel="stylesheet" href="css/result.css"> -->
+  <div th:replace="fragments/boilerplate :: css"></div>
+
+  <title>Search Results</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Page top section -->
+    <section class="page-top-section set-bg" data-setbg="images/page-top-bg/2.jpg">
+      <div class="page-info text-center">
+        <h2>Search Results</h2>
+        <div class="site-breadcrumb">
+          <span>Table-top Games</span>
+        </div>
+      </div>
+    </section>
+    <!-- Page top end-->
+
+  <section class="newsletter-section">
+
+    <div class="row">
+      <div class="col-md"></div>
+      <div class="col-md-4 text-center">
+        <p class="sort-select-text">Sort by</p>
+        <select onchange="reloadSorted(this)">
+          <option value="gameRank">Rank</option>
+          <option value="name">Name</option>
+          <option value="votes">Votes</option>
+        </select>
+      </div>
+      <div class="col-md-4 text-center">
+        <p class="page-select-text">Page</p>
+
+        <select onchange="switchPage(this)" class="page-dropdown">
+        </select>
+
+      </div>
+      <div class="col-md"></div>
+    </div>
+    <table class="table" id="search-results-table">
+
+    <div th:replace="fragments/game-results :: game-results"></div>
+
+    </table>
+    <div class="row">
+      <div class="col-md"></div>
+      <div class="col-md-4 text-center">
+        <p class="page-select-text">Page</p>
+
+        <select onchange="switchPage(this)" class="page-dropdown">
+        </select>
+
+      </div>
+      <div class="col-md"></div>
+    </div>
+  </section>
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <div th:replace="fragments/boilerplate :: js"></div>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var numOfPages = /*[[${numOfPages}]]*/ 'default';
+
+    /*]]>*/
+  </script>
+  <script type="text/javascript" src="js/result.js"></script>
+</body>
+
+</html>

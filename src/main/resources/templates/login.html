@@ -1,49 +1,71 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
-<head th:replace="fragments/header.html :: html-head(title='Log In!')"></head>
+<head>
+    <div th:replace="fragments/boilerplate :: head"></div>
+    <div th:replace="fragments/boilerplate :: css"></div>
+    <!-- <link rel="stylesheet" th:href="@{css/login.css}"> -->
+    <title>Log In</title>
+</head>
 
 <body>
-    <nav th:replace="fragments/links :: nav.navigation-links"></nav>
-    <main class="container">
-        <div class="p-4 p-md-5 mb-4 text-center">
-            <h1 class="my-2 pb-3">Please Login</h1>
 
-            <div th:if="${param.error}" style="color: red;">
-                <p>Invalid User Name or Password</p>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!-- Page top section -->
+    <section class="page-top-section set-bg" th:data-setbg="@{~/images/page-top-bg/2.jpg}">
+        <div class="page-info">
+            <h2>Log in</h2>
+            <div class="site-breadcrumb">
+                <a href="/home">Home</a> /
+                <span>Login</span>
             </div>
-            <div th:if="${param.logout}" style="color: red;">
-                <p>You are now logged out</p>
-            </div>
+        </div>
+    </section>
+    <!-- Page top end-->
 
-            <form action="#" th:action="@{/login}" method="post">
-                <div class="form-group row justify-content-center my-2">
-                    <label for="inputUserName" class="col-sm-2 col-form-label">User name:</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="username" class="form-control" id="inputUserName"
-                            placeholder="Enter Username">
-                    </div>
-                </div>
-                <div class="form-group row justify-content-center my-2">
-                    <label for="inputPassword" class="col-sm-2 col-form-label">Password:</label>
-                    <div class="col-sm-4">
-                        <input type="password" name="password" class="form-control" id="inputPassword"
-                            placeholder="Enter Password">
-                    </div>
-                </div>
-                <input type="submit" value="Log In" class="btn btn-primary m-2 pb-2">
-            </form>
+    <!-- Login Form -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
 
-            <div class="container text-center my-2">
-                <p class="lead">Join <a href="#" th:href="@{/newUser}"> Here </a></p>
-                <p class="lead"><a href="/" th:href="@{/}">Back to Home</a></p>
+                <div class="col-md">
+                    <form login-page='/customLogin?login_error=1' class="filter text-center" action="/login"
+                        method='POST'>
+                        <div class="form-label-group">
+                            <label for="inputUser">Username</label>
+                            <input type="text" name="username" id="inputUser" class="form-control"
+                                placeholder="Username" required autofocus>
+                        </div>
+
+                        <div class="form-label-group">
+                            <label for="inputPassword">Password</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control"
+                                placeholder="Password" required>
+                        </div>
+
+                        <div th:if="${error != null}">
+                            <p class="text-danger text-center my-error-text">
+                                Invalid credentials. Please try again.
+                            </p>
+                        </div>
+
+                        <button class="site-btn login-btn" name="submit" value="submit" type="submit">Sign in</button>
+                    </form>
+                </div>
+
+                <div class="col-md-3"></div>
             </div>
 
         </div>
-    </main>
-    <div class="b-example-divider border border-light"></div>
-    <div th:include="fragments/links :: div.bottom-links"></div>
-    <div th:replace="fragments/footer.html :: page-footer"></div>
+    </section>
+
+
+    <div th:replace="fragments/footer :: footer"></div>
+
+    <div th:replace="fragments/boilerplate :: js"></div>
+    <script type="text/javascript" src="js/login.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <div th:replace="fragments/boilerplate :: head"></div>
+  <div th:replace="fragments/boilerplate :: css"></div>
+  <title th:text="'Editing ' + ${game.name}"></title>
+  <title>Add a Game</title>
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <!-- Page top section -->
+  <section class="page-top-section set-bg" th:data-setbg="@{~/images/page-top-bg/1.jpg}">
+    <div class="page-info">
+      <h2 th:text="'Editing ' + ${game.name}"></h2>
+      <div class="site-breadcrumb">
+        <a href="/home">Home</a> /
+        <span>Edit</span>
+      </div>
+    </div>
+  </section>
+  <!-- Page top end-->
+  <div th:if="${game.authorUsername == username}">
+
+    <!-- Game Form -->
+    <section class="newsletter-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-10 game-form">
+            <form action="return false;" id="editForm">
+
+              <input type="hidden" th:value="${game.gameId}" name="game-id" />
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="name">Name</label>
+                  <input type="text" name="name" id="name" class="form-control" placeholder="Game Name"
+                    th:value="${game.name}" required>
+                  <div class="invalid-feedback">
+                    Please enter a name.
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="designer">Designer</label>
+                  <input type="text" name="designer" id="designer" class="form-control" placeholder="Designer"
+                    th:value="${game.designer}" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="publisher">Publisher</label>
+                  <input type="text" name="publisher" id="publisher" class="form-control" placeholder="Publisher"
+                    th:value="${game.publisher}" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="year">Year</label>
+                  <input type="text" name="year" id="year" class="form-control" placeholder="Year Published"
+                    th:value="${game.year}" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="min-players">Minimum Players</label>
+                  <select name="min-players" id="min-players" class="form-control" th:selected="${game.min_player}"
+                    required>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="max-players">Maximum Players</label>
+                  <select name="max-players" id="max-players" class="form-control" th:value="${game.max_player}"
+                    required>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="age">Minimum Age</label>
+                  <select name="age" id="age" class="form-control" th:value="${game.age}" required>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="avg-play-time">Average Play Time</label>
+                  <input type="text" name="avg-play-time" id="avg-play-time" class="form-control" placeholder="Minutes"
+                    th:value="${game.avg_play_time}" required>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="min-play-time">Minimum Play Time</label>
+                  <input type="text" name="min-play-time" id="min-play-time" class="form-control" placeholder="Minutes"
+                    th:value="${game.min_play_time}" required>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="max-play-time">Maximum Play Time</label>
+                  <input type="text" name="max-play-time" id="max-play-time" class="form-control" placeholder="Minutes"
+                    th:value="${game.max_play_time}" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="desc">Game Description</label>
+                <textarea class="form-control" name="desc" id="desc" rows="3" placeholder="Tell us about the game!"
+                  th:text="${game.description}" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="img-url">Image URL</label>
+                <input type="text" class="form-control" name="img-url" id="img-url"
+                  placeholder="https://example.com/my_image.jpg" th:value="${game.img_url}" required>
+              </div>
+
+              <div class="form-group">
+                <label for="thumb-url">Thumbnail URL</label>
+                <input type="text" name="thumb-url" class="form-control" id="thumb-url"
+                  placeholder="https://example.com/my_thumbnail.jpg" th:value="${game.thumb_url}" required>
+              </div>
+
+              <div class="form-group">
+                <label for="bgg-url">BGG URL</label>
+                <input type="text" name="bgg-url" class="form-control" id="bgg-url" th:value="${game.bgg_url}"
+                  placeholder="https://boardgamegeek.com/boardgame/1111/game-name">
+              </div>
+
+              <!-- Category/Mechanic Modal Buttons -->
+              <div class="row search-btn-row">
+                <div class="col-md-4"></div>
+                <div class="col-md-1">
+                  <button type="button" class="btn btn-warning" data-toggle="modal"
+                    data-target="#categoryModal">Categories</button>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-1">
+                  <button type="button" class="btn btn-warning" data-toggle="modal"
+                    data-target="#mechanicModal">Mechanics</button>
+                </div>
+                <div class="col-md-4"></div>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="form-row search-btn-row">
+                <div class="col-md"></div>
+                <div class="col-md-3">
+                  <button class="site-btn button" action="return false" id="submitBtn">Submit Changes</button>
+                </div>
+                <div class="col-md"></div>
+              </div>
+
+              <!-- Delete trigger modal -->
+              <div class="form-row">
+                <div class="col-md"></div>
+                <div class="col-md-3">
+                  <button type="button" id="deleteGameBtn" class="site-btn" data-toggle="modal"
+                    data-target="#deleteModal">DELETE
+                    GAME</button>
+                </div>
+                <div class="col-md"></div>
+              </div>
+
+              <!-- Category Modal -->
+              <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog"
+                aria-labelledby="categoryModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="categoryModalLabel">Select Categories</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" id="categoryModalBody">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mechanic Modal -->
+              <div class="modal fade" id="mechanicModal" tabindex="-1" role="dialog"
+                aria-labelledby="mechanicModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="mechanicModalLabel">Select Mechanics</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" id="mechanicModalBody">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </form>
+
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+
+        <!-- Delete Game Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete Game?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                This action cannot be undone. Are you sure you wish to delete this game?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmDelete" onclick="return false;">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <input type="hidden" th:value="${game.gameId}" name="game-id" />
+
+        </form>
+        <div class="col-md-1"></div>
+      </div>
+  </div>
+
+  </div>
+
+  </section>
+  </div>
+  <!-- End Edit Form -->
+
+  <!-- Unauthorized User -->
+  <div th:unless="${game.authorUsername == username}">
+
+    <div class="row comment-row text-center">
+      <div class="col-md-4"></div>
+      <div class="d-flex flex-column align-items-center justify-content-between col-md">
+        <p class="my-error-text">You did not add this game. Cannot edit!</p>
+        <form action="/" method="get">
+          <button class="site-btn commentBtn">Return to Home</button>
+        </form>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+  <div th:replace="fragments/boilerplate :: js"></div>
+
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    var minPlayers = /*[[${game.min_player}]]*/ 'default';
+    var maxPlayers = /*[[${game.max_player}]]*/ 'default';
+    var minAge = /*[[${game.age}]]*/ 'default';
+    var categories = /*[[${categories}]]*/ 'default';
+    var mechanics = /*[[${mechanics}]]*/ 'default';
+
+    /*]]>*/
+  </script>
+  <script type="text/javascript" th:src="@{~/js/mechanicDict.js}"></script>
+  <script type="text/javascript" th:src="@{~/js/categoryDict.js}"></script>
+  <script type="text/javascript" th:src="@{~/js/edit.js}"></script>
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <div th:replace="fragments/boilerplate :: head"></div>
+
+  <div th:replace="fragments/boilerplate :: css"></div>
+  <link rel="stylesheet" th:href="@{css/nouislider.css}">
+
+  <title>Search for Games</title>
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <!-- Page top section -->
+  <section class="page-top-section set-bg" data-setbg="images/page-top-bg/1.jpg">
+    <div class="page-info text-center">
+      <h2>Search</h2>
+      <div class="site-breadcrumb">
+        <span>Select filters</span>
+      </div>
+    </div>
+  </section>
+  <!-- Page top end-->
+
+  <!-- Sliders section -->
+  <section class="newsletter-section">
+    <div class="container">
+      <form class="filter sliders text-center" action="/query" method="get">
+
+        <th:block th:each="slider, count: ${sliders}">
+          <div class="slider-row">
+            <div class="text-white">
+              <h4 th:text="${slider.display}"></h4>
+            </div>
+
+            <div class="form-row slider-row">
+              <div class="col-md"></div>
+              <div class="col-md-8">
+                <div class="my-slider" th:id="${slider.id} + 'Slider'"></div>
+              </div>
+              <div class="col-md"></div>
+            </div>
+
+            <div class="form-row">
+              <div class="col-md-2"></div>
+              <div class="col-md-1 value-input">
+                <input class="input-elm text-center" th:name="${slider.id} + 'Min'" type="text"
+                  th:id="${slider.id} + 'Min'" th:value="${slider.min}">
+              </div>
+              <div class="col-md-6"></div>
+              <div class="col-md-1 value-input">
+                <input class="input-elm text=center" th:name="${slider.id} + 'Max'" type="text"
+                  th:id="${slider.id} + 'Max'" th:value="${slider.max}">
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+          </div>
+        </th:block>
+
+        <!-- Category/Mechanic Modal Buttons -->
+        <div class="row search-btn-row">
+          <div class="col-md-4"></div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-warning" data-toggle="modal"
+              data-target="#categoryModal">Categories</button>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-1">
+            <button type="button" class="btn btn-warning" data-toggle="modal"
+              data-target="#mechanicModal">Mechanics</button>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+
+        <!-- Submission Button -->
+        <div class="button-group">
+            <div class="row submit-btn-row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6">
+                <button class="site-btn" type="button"
+                  onclick="return false;" id="submissionBtn">Submit</button>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+
+        <!-- Category Modal -->
+        <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="categoryModalLabel">Select Categories</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="categoryModalBody">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mechanic Modal -->
+        <div class="modal fade" id="mechanicModal" tabindex="-1" role="dialog" aria-labelledby="mechanicModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="mechanicModalLabel">Select Mechanics</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="mechanicModalBody">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Accept</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </section>
+  <!-- Sliders section end -->
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <div th:replace="fragments/boilerplate :: js"></div>
+  <script type="text/javascript" src="js/mechanicDict.js"></script>
+  <script type="text/javascript" src="js/categoryDict.js"></script>
+  <script type="text/javascript" src="js/search.js"></script>
+  <script type="text/javascript" src="js/nouislider.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,5 @@
+out_file: "updated_data.csv"
+user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36"
+data_file: "data.csv"
+category_url: "https://boardgamegeek.com/browse/boardgamecategory"
+mechanic_url: "https://boardgamegeek.com/browse/boardgamemechanic"

@@ -1,0 +1,209 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <div th:replace="fragments/boilerplate :: head"></div>
+
+  <div th:replace="fragments/boilerplate :: css"></div>
+  <!-- <link rel="stylesheet" th:href="@{~/css/game.css}"> -->
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <title th:text="${game.name}"></title>
+</head>
+
+<body>
+
+  <div th:replace="fragments/navbar :: navbar"></div>
+
+  <!-- Page top section -->
+  <section class="page-top-section set-bg" th:data-setbg="@{~/images/page-top-bg/3.jpg}">
+    <div class="page-info">
+      <h2 th:text="${game.name}"></h2>
+      <div class="site-breadcrumb">
+        <a href="/home">Home</a> /
+        <span>Games</span>
+      </div>
+    </div>
+  </section>
+  <!-- Page top end-->
+
+  <!-- Games section -->
+  <section class="games-single-page">
+    <div class="container">
+
+      <!-- Game Image -->
+      <div class="game-single-preview text-center">
+        <img th:src="${game.img_url}" alt="Game image">
+      </div>
+
+      <!-- Edit Button -->
+      <div class="row" th:if="${game.authorUsername == username}">
+        <div class="col-md"></div>
+        <div class="col-md-6 text-center">
+          <button class="site-btn" id="editBtn" th:data-id="${game.gameId}"
+            onclick="location.href='/edit/' + this.getAttribute('data-id')">EDIT</button>
+        </div>
+        <div class="col-md"></div>
+      </div>
+
+      <div class="row">
+
+        <!-- Description -->
+        <div class="col-xl-9 col-lg-8 col-md-7 game-single-content">
+          <h2 class="gs-title" th:text="${game.name}"></h2>
+          <div class="gs-meta" th:text="'From ' + ${game.publisher}"></div>
+          <h4>Description</h4>
+          <p th:utext="${#strings.replace( #strings.escapeXml( game.description ),T(java.lang.System).getProperty('line.separator'),'&lt;br /&gt;')}" ></p>
+          <!-- <p th:text="${game.description}"></p> -->
+
+          <h4>Comments</h4>
+          <!-- Comments -->
+          <th:block th:if="${comments != null}">
+            <!-- List Of Comments -->
+            <th:block th:each="comment, count: ${comments}">
+
+              <div class="review-item">
+                <div class="row comment-row">
+                  <div class="col-lg-4">
+                    <div class="review-pic text-center">
+                      <img class="avatar" th:src="${comment.avatar}" alt="User avatar">
+                    </div>
+                  </div>
+                  <div class="col-lg-8">
+                    <div class="review-content text-box text-white">
+                      <div class="d-flex justify-content-between comment-top">
+                        <div th:text="${comment.username}" class="comment-name"></div>
+                        <div th:text="${comment.date}" class="comment-date"></div>
+                      </div>
+                      <p th:text="${comment.content}"></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </th:block>
+
+            <!-- Add Comment Button -->
+            <div th:if="${username != 'anonymousUser'}">
+              <div class="d-flex justify-content-center align-items-center flex-column">
+                <button class="site-btn button commentBtn">Add Comment</button>
+              </div>
+            </div>
+
+          </th:block>
+
+          <!-- No Comment Yet -->
+          <div th:if="${comments == null AND username != 'anonymousUser'}">
+            <div class="row comment-row text-center">
+              <div class="col-md-4"></div>
+              <div class="d-flex flex-column align-items-center justify-content-between col-md">
+                <p>Hmm... looks like there's no comments here.</p>
+                <button class="site-btn commentBtn">Be the first!</button>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+          </div>
+
+          <!-- User Not Logged In -->
+          <div th:if="${username == 'anonymousUser'}">
+            <div class="row text-center">
+              <div class="col-md-4"></div>
+              <div class="d-flex flex-column align-items-center justify-content-between col-md">
+                <p>Log in to leave a comment.</p>
+                <form action="/login" method="get">
+                  <button class="site-btn commentBtn">Log in</button>
+                </form>
+              </div>
+              <div class="col-md-4"></div>
+            </div>
+          </div>
+
+          <!-- New Comment Popout -->
+          <div hidden>
+            <div th:if="${username != 'anonymousUser'}" class="new-comment">
+
+              <div class="review-item">
+                <div class="row comment-row">
+                  <div class="col-lg-4">
+                    <div class="review-pic text-center">
+                      <img class="avatar" th:src="${avatar}" alt="User avatar">
+                    </div>
+                  </div>
+                  <div class="col-lg-8">
+                    <div class="review-content text-box text-white">
+                      <div class="d-flex justify-content-between comment-top">
+                        <div th:text="${username}" class="comment-name"></div>
+                      </div>
+
+                      <form th:action="|${game.gameId}|" th:method="post">
+                        <div class="form-row">
+                          <textarea name="content" class="w-100 form-control comment-textarea" type="textarea" rows=3
+                            placeholder="Comment . . ."></textarea>
+                        </div>
+                        <div class="text-right">
+                          <button class="site-btn submitComment">Submit</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <!-- Info -->
+        <div class="col-xl-3 col-lg-4 col-md-5 sidebar game-page-sideber">
+          <div id="stickySidebar">
+            <div class="widget-item">
+              <div class="rating-widget">
+                <h4 class="widget-title">Info</h4>
+                <ul>
+                  <li>Players<span th:text="${game.min_player} + ' to ' + ${game.max_player}"></span></li>
+                  <li>Playtime<span th:text="'~' + ${game.avg_play_time} + ' min'"></span></li>
+                  <li>Age<span th:text="${game.age} + '+'"></span></li>
+                  <li>BGG Link<span><a th:href="${game.bgg_url}">Link</a></span></li>
+                  <li>Fans<span th:text="${game.fans}"></span></li>
+                </ul>
+                <div class="rating text-left">
+                  <h5>Rank<span th:text="' # ' + ${game.gameRank}"></span></h5>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="widget-item">
+              <div class="testimonials-widget">
+                <h4 class="widget-title">Tags</h4>
+                <p class="tag-title">Categories</p>
+                <div class="testim-text">
+                  <p th:text="${categories}"></p>
+                </div>
+                <p class="tag-title">Mechanics</p>
+                <div class="testim-text">
+                  <p th:text="${mechanics}"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Games end-->
+
+
+
+  <div th:replace="fragments/footer :: footer"></div>
+
+  <div th:replace="fragments/boilerplate :: js"></div>
+  <script type="text/javascript" th:src="@{~/js/game.js}"></script>
+</body>
+
+</html>
