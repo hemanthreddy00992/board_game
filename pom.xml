@@ -66,6 +66,21 @@
 		</dependency>
 	</dependencies>
 
+<!-- Nexus settings -->
+	<distributionManagement>
+  		<repository>
+   		 <id>maven-releases</id>
+   		 <!-- CHANGE HERE by your team Nexus server -->
+  		  <url>http://13.201.16.153:8081/repository/maven-releases/</url>
+ 		  </repository>
+	</distributionManagement>
+	<repository>
+  		<id>maven-releases</id>
+  		<name>maven-releases</name>
+  		<url>http://13.201.16.153:8081/repository/maven-releases/</url>
+	</repository>
+<!-- Nexus settings -->
+	
 	<build>
 		<plugins>
 			<plugin>
