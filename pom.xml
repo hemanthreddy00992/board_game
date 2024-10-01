@@ -74,11 +74,13 @@
   		  <url>http://13.201.16.153:8081/repository/maven-releases/</url>
  		  </repository>
 	</distributionManagement>
+<repositories>
 	<repository>
   		<id>maven-releases</id>
   		<name>maven-releases</name>
   		<url>http://13.201.16.153:8081/repository/maven-releases/</url>
 	</repository>
+</repositories>
 <!-- Nexus settings -->
 	
 	<build>
