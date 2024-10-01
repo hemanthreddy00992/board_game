@@ -71,14 +71,14 @@
   		<repository>
    		 <id>maven-releases</id>
    		 <!-- CHANGE HERE by your team Nexus server -->
-  		  <url>http://13.201.16.153:8081/repository/maven-releases/</url>
+  		  <url>http://15.206.172.120:8081/repository/maven-releases/</url>
  		  </repository>
 	</distributionManagement>
 <repositories>
 	<repository>
   		<id>maven-releases</id>
   		<name>maven-releases</name>
-  		<url>http://13.201.16.153:8081/repository/maven-releases/</url>
+  		<url>http://15.206.172.120:8081/repository/maven-releases/</url>
 	</repository>
 </repositories>
 <!-- Nexus settings -->
