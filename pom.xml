@@ -11,7 +11,6 @@
 	<groupId>com.bgs</groupId>
 	<artifactId>BoardGameSelector</artifactId>
 	<version>0.0.1</version>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>BoardGameSelector</name>
 	<description>Web app for selecting board games based on criteria</description>
 
