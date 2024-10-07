@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: my-service
 spec:
-  type: loadBalancer
+  type: LoadBalancer
   selector:
     app: game
   ports:
