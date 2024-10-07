@@ -111,6 +111,7 @@ resource "aws_eks_node_group" "my_eks_node" {
   instance_types = ["t2.medium"]
 
   remote_access {
+    ec2_ssh_key = var.ssh_key_name
     source_security_group_ids = [aws_security_group.my_node_sg.id]
   }
 }
