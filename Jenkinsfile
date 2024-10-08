@@ -64,7 +64,7 @@ pipeline {
          stage('Docker build and tag') {
             steps {
                 script {
-                 sh "docker build -t hemanthreddy00992/game:latest ."
+                 sh "docker build -t hemanthreddy00992/game:${BUILD_NUMBER} ."
                 }
             }
         } 
@@ -73,7 +73,7 @@ pipeline {
             steps {
                 script {
                 withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                 sh "docker push hemanthreddy00992/game:latest"
+                 sh "docker push hemanthreddy00992/game:${BUILD_NUMBER}"
                     }
                 }
             }
@@ -81,7 +81,7 @@ pipeline {
         
         stage('trivy image scan'){
             steps{
-                sh 'trivy image hemanthreddy00992/game:latest > trivyimage.txt'
+                sh 'trivy image hemanthreddy00992/game:${BUILD_NUMBER} > trivyimage.txt'
             }
         }
       
@@ -91,7 +91,7 @@ pipeline {
             steps {
                 script {
                 withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                 sh "docker run -it -d -p 8082:8080 hemanthreddy00992/game:latest"
+                 sh "docker run -it -d -p 8082:8080 hemanthreddy00992/game:${BUILD_NUMBER}"
                     }
                 }
             }
