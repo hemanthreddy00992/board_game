@@ -98,6 +98,46 @@ pipeline {
         }
         */
 
+        stage('Checkout K8S manifest SCM'){
+            steps {
+                git credentialsId: 'f87a34a8-0e09-45e7-b9cf-6dc68feac670', 
+                url: 'https://github.com/hemanthreddy00992/board_game.git',
+                branch: 'main'
+            }
+        }
+
+        stage('Update k8s deployement file'){
+            steps {
+        script {
+            withCredentials([usernamePassword(credentialsId: 'f87a34a8-0e09-45e7-b9cf-6dc68feac670', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                sh '''
+                # Display the original contents of the deployment file
+                echo "Original deployement.yaml contents:"
+                cat deployement.yaml
+                
+                # Use sed to replace the image tag with the Jenkins BUILD_NUMBER
+                sed -i.bak "s|image: .*:.*|image: hemanthreddy00992/game:${BUILD_NUMBER}|g" k8s/manifests/deployement.yaml
+                
+                # Show updated deployment file
+                echo "Updated deployement.yaml contents:"
+                cat deployement.yaml
+
+                # Configure Git
+                git config user.email "hemanthreddy00992@gmail.com"
+                git config user.name "hemanthreddy00992"
+
+                # Stage and commit the changes
+                git add deployement.yaml
+                git commit -m "Updated the deployement.yaml | Jenkins Pipeline"
+
+                # Push changes using the GitHub credentials
+                git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/hemanthreddy00992/board_game.git HEAD:main
+                '''
+                }
+              }
+            }
+        }
+
       
 
     }
